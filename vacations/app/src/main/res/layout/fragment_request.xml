@@ -1,0 +1,47 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Contador de días de vacaciones disponibles -->
+    <TextView
+        android:id="@+id/textViewAvailableDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Available days: 0"
+        android:textSize="18sp"
+        android:paddingBottom="16dp"/>
+
+    <!-- Fecha de inicio de vacaciones -->
+    <Button
+        android:id="@+id/buttonStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Start Date" />
+
+    <!-- Fecha de fin de vacaciones -->
+    <Button
+        android:id="@+id/buttonEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select End Date" />
+
+    <!-- Campo de comentarios -->
+    <EditText
+        android:id="@+id/editTextComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Add details (optional)"
+        android:minHeight="100dp"
+        android:gravity="top"
+        android:padding="8dp"/>
+
+    <!-- Botón para solicitar vacaciones -->
+    <Button
+        android:id="@+id/btnRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Vacation Request" />
+</LinearLayout>
