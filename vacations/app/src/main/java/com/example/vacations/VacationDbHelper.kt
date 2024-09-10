@@ -13,7 +13,7 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Crear tabla de empleados
+
         val CREATE_EMPLOYEE_TABLE = """
             CREATE TABLE employee (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,7 +25,7 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         """.trimIndent()
         db.execSQL(CREATE_EMPLOYEE_TABLE)
 
-        // Crear tabla de solicitudes de vacaciones
+
         val CREATE_VACATION_TABLE = """
             CREATE TABLE vacation (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,7 +40,6 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         """.trimIndent()
         db.execSQL(CREATE_VACATION_TABLE)
         insertDefaultRequest(db)
-        // Insertar un empleado por defecto
         insertDefaultEmployee(db)
 
     }
@@ -59,7 +58,7 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         }
     }
 
-    // Función para insertar un usuario por defecto en la tabla de empleados
+
     private fun insertDefaultEmployee(db: SQLiteDatabase) {
         val values = ContentValues().apply {
             put("username", "defaultuser")    // Usuario por defecto
@@ -74,6 +73,7 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
             println("Error al crear el usuario por defecto")
         }
     }
+
 
     private fun insertDefaultRequest(db: SQLiteDatabase) {
         val values = ContentValues().apply {

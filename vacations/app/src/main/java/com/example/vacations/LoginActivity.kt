@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Función para verificar el login
+
     private fun login(username: String, password: String): Employee? {
         val db = dbHelper.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM employee WHERE username = ? AND password = ?", arrayOf(username, password))

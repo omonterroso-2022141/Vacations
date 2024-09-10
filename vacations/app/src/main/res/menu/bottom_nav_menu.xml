@@ -1,12 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:title="Status" />
+        android:title="Status"
+        android:icon="@drawable/iconl" /> <!-- Cambia esto por tu ícono -->
+
     <item
         android:id="@+id/navigation_request"
-        android:title="Request" />
+        android:title="Request"
+        android:icon="@drawable/icon" /> <!-- Cambia esto por tu ícono -->
+
     <item
         android:id="@+id/navigation_profile"
-        android:title="Team" />
-
+        android:title="Team"
+        android:icon="@drawable/iconr" /> <!-- Cambia esto por tu ícono -->
 </menu>

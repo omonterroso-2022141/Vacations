@@ -17,51 +17,67 @@ import java.util.*
 
 class RequestFragment : Fragment() {
     private lateinit var dbHelper: VacationDbHelper
-    private var employeeId: Int = -1  // ID del empleado logueado
-    private var availableDays: Int = 0  // Días de vacaciones disponibles
+    private var employeeId: Int = -1
+    private var availableDays: Int = 0
     private lateinit var startDate: String
     private lateinit var endDate: String
+
+
+    private val holidays = listOf(
+        "2024-01-01",
+        "2024-12-25",
+        "2024-09-15"
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_request, container, false)
 
         dbHelper = VacationDbHelper(requireContext())
 
-        // Obtener el ID del empleado pasado desde MainActivity
+
         employeeId = arguments?.getInt("employeeId") ?: -1
         if (employeeId == -1) {
             Toast.makeText(requireContext(), "Error: Employee ID not found", Toast.LENGTH_SHORT).show()
             return view
         }
 
-        // Mostrar los días de vacaciones disponibles
+
         availableDays = getAvailableDays(employeeId)
         val textViewAvailableDays = view.findViewById<TextView>(R.id.textViewAvailableDays)
-        textViewAvailableDays.text = "Available days: $availableDays"
+        textViewAvailableDays.text = "$availableDays"
 
-        // Configurar los botones de fecha
         val buttonStartDate = view.findViewById<Button>(R.id.buttonStartDate)
         val buttonEndDate = view.findViewById<Button>(R.id.buttonEndDate)
+        val btnRequest = view.findViewById<Button>(R.id.btnRequest)
+        val editTextComment = view.findViewById<EditText>(R.id.editTextComment)
+
+
         buttonStartDate.setOnClickListener { showDatePickerDialog(true) }
         buttonEndDate.setOnClickListener { showDatePickerDialog(false) }
 
-        // Configurar el botón de solicitud
-        val btnRequest = view.findViewById<Button>(R.id.btnRequest)
-        val editTextComment = view.findViewById<EditText>(R.id.editTextComment)
 
         btnRequest.setOnClickListener {
             if (::startDate.isInitialized && ::endDate.isInitialized) {
                 val daysRequested = calculateDaysRequested(startDate, endDate)
-                if (daysRequested > 0 && availableDays >= daysRequested) {
-                    val comment = editTextComment.text.toString()
-                    addRequest(startDate, endDate, daysRequested, comment)
-                    Toast.makeText(requireContext(), "Request submitted", Toast.LENGTH_SHORT).show()
+                if (daysRequested > 0) {
+
+                    if (isValidDateRange(startDate, endDate)) {
+
+                        if (daysRequested <= availableDays) {
+                            val comment = editTextComment.text.toString()
+                            addRequest(startDate, endDate, daysRequested, comment)
+                            Toast.makeText(requireContext(), "Request submitted", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), "You cannot request more days than available", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Selected dates include weekends or holidays", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Toast.makeText(requireContext(), "Not enough available days or invalid dates", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Invalid date range", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(requireContext(), "Please select both start and end dates", Toast.LENGTH_SHORT).show()
@@ -71,7 +87,7 @@ class RequestFragment : Fragment() {
         return view
     }
 
-    // Mostrar el selector de fecha
+
     private fun showDatePickerDialog(isStartDate: Boolean) {
         val calendar = Calendar.getInstance()
         val datePickerDialog = DatePickerDialog(
@@ -80,10 +96,10 @@ class RequestFragment : Fragment() {
                 val selectedDate = "$year-${month + 1}-$dayOfMonth"
                 if (isStartDate) {
                     startDate = selectedDate
-                    view?.findViewById<Button>(R.id.buttonStartDate)?.text = "Start Date: $selectedDate"
+                    view?.findViewById<Button>(R.id.buttonStartDate)?.text = "Fecha de inicio: $selectedDate"
                 } else {
                     endDate = selectedDate
-                    view?.findViewById<Button>(R.id.buttonEndDate)?.text = "End Date: $selectedDate"
+                    view?.findViewById<Button>(R.id.buttonEndDate)?.text = "Fecha de finalización: $selectedDate"
                 }
             },
             calendar.get(Calendar.YEAR),
@@ -93,7 +109,32 @@ class RequestFragment : Fragment() {
         datePickerDialog.show()
     }
 
-    // Calcular los días solicitados entre las dos fechas seleccionadas
+    // Validar si las fechas seleccionadas caen en fines de semana o días festivos
+    private fun isValidDateRange(startDate: String, endDate: String): Boolean {
+        return !isWeekend(startDate) && !isHoliday(startDate, holidays) &&
+                !isWeekend(endDate) && !isHoliday(endDate, holidays)
+    }
+
+
+    private fun isWeekend(date: String): Boolean {
+        val dateParts = date.split("-")
+        val year = dateParts[0].toInt()
+        val month = dateParts[1].toInt() - 1
+        val day = dateParts[2].toInt()
+
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day)
+
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+    }
+
+
+    private fun isHoliday(date: String, holidays: List<String>): Boolean {
+        return holidays.contains(date)
+    }
+
+
     private fun calculateDaysRequested(startDate: String, endDate: String): Int {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val start = dateFormat.parse(startDate)
@@ -102,7 +143,7 @@ class RequestFragment : Fragment() {
         return (diff / (1000 * 60 * 60 * 24)).toInt() + 1
     }
 
-    // Obtener los días disponibles del empleado
+
     private fun getAvailableDays(employeeId: Int): Int {
         val db = dbHelper.readableDatabase
         val cursor = db.rawQuery("SELECT available_days FROM employee WHERE id = ?", arrayOf(employeeId.toString()))
@@ -114,7 +155,7 @@ class RequestFragment : Fragment() {
         return availableDays
     }
 
-    // Añadir la solicitud a la base de datos con comentarios
+
     private fun addRequest(startDate: String, endDate: String, daysRequested: Int, comment: String) {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
