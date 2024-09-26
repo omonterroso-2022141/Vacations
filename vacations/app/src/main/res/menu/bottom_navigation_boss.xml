@@ -6,10 +6,10 @@
     <item
         android:id="@+id/navigation_approved_requests"
         android:icon="@drawable/iconl"
-        android:title="Aprobadas" />
+        android:title="Historial" />
 
     <item
         android:id="@+id/navigation_team"
         android:icon="@drawable/iconr"
-        android:title="Team" />
+        android:title="Equipo" />
 </menu>

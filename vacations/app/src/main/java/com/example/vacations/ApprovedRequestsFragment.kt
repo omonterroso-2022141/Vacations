@@ -40,7 +40,7 @@ class ApprovedRequestsFragment : Fragment() {
                 // Crear la vista para cada solicitud aprobada o rechazada
                 val requestView = layoutInflater.inflate(R.layout.item_approved_request, container, false)
                 val textView = requestView.findViewById<TextView>(R.id.approvedRequestInfo)
-                textView.text = "Empleado: $employeeId\nInicio: $startDate\nFin: $endDate\nDías: $daysRequested\nComentario: $comment\nEstado: $status"
+                textView.text = "Identificador: $employeeId\nInicio: $startDate\nFin: $endDate\nDías: $daysRequested\nComentario: $comment\nEstado: $status"
 
                 // Añadir la vista al contenedor
                 container.addView(requestView)
