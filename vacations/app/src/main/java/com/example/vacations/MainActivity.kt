@@ -36,6 +36,10 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+                R.id.navigation_team -> {
+                    // Navegar al fragmento TeamFragment
+                    selectedFragment = TeamFragment()  // Cargar el fragmento de lista de empleados
+                }
             }
             if (selectedFragment != null) {
                 loadFragment(selectedFragment)

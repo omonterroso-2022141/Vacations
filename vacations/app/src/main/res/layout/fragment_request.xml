@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/agdasima_bold"
-        android:text="Dias disponibles"
+        android:text="Días disponibles"
         android:textColor="@color/white"
         android:textSize="50sp" />
 

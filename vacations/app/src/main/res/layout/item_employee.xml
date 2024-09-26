@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/rectangle_background"
+    android:padding="16dp"
+    android:layout_margin="8dp"
+    android:gravity="center_vertical">
+
+    <!-- Nombre del empleado (A la izquierda) -->
+    <TextView
+        android:id="@+id/employeeName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Nombre del empleado"
+        android:textSize="18sp"
+        android:textColor="@android:color/black" />
+
+    <!-- Días disponibles (A la derecha) -->
+    <TextView
+        android:id="@+id/employeeVacationDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textSize="18sp"
+        android:textColor="@android:color/black" />
+</LinearLayout>

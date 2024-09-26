@@ -2,15 +2,15 @@
     <item
         android:id="@+id/navigation_home"
         android:title="Status"
-        android:icon="@drawable/iconl" /> <!-- Cambia esto por tu ícono -->
+        android:icon="@drawable/iconl" />
 
     <item
         android:id="@+id/navigation_request"
         android:title="Request"
-        android:icon="@drawable/icon" /> <!-- Cambia esto por tu ícono -->
+        android:icon="@drawable/icon" />
 
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_team"
         android:title="Team"
-        android:icon="@drawable/iconr" /> <!-- Cambia esto por tu ícono -->
+        android:icon="@drawable/iconr" />
 </menu>
