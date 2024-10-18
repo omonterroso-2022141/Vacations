@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.vacations.VacationDbHelper.Employee
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var dbHelper: VacationDbHelper
@@ -63,5 +64,3 @@ class LoginActivity : AppCompatActivity() {
         return null
     }
 }
-
-data class Employee(val id: Int, val username: String, val role: String)

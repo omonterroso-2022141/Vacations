@@ -1,16 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_home"
-        android:title="Estado"
-        android:icon="@drawable/iconl" />
-
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/icon"
+        android:title="Profile" />
     <item
         android:id="@+id/navigation_request"
-        android:title="Solicitar"
-        android:icon="@drawable/icon" />
-
+        android:icon="@drawable/iconr"
+    android:title="Request" />
     <item
         android:id="@+id/navigation_team"
-        android:title="Equipo"
-        android:icon="@drawable/iconr" />
+        android:icon="@drawable/iconl"
+    android:title="Team" />
+    <item
+        android:id="@+id/navigation_logout"
+        android:title="Cerrar sesión"
+        android:icon="@drawable/icon"/>
+
 </menu>

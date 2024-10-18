@@ -18,7 +18,12 @@
         android:textColor="@color/white"
         android:textSize="50sp" />
 
+    <!-- Botón de cerrar sesión -->
+    <!-- Hacerlo transparente o poner un drawable -->
+
+
     <!-- Número "0" debajo del título -->
+
     <TextView
         android:id="@+id/textViewAvailableDays"
         android:layout_width="wrap_content"

@@ -1,15 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_pending_requests"
-        android:icon="@drawable/iconl"
+        android:icon="@drawable/icon"
         android:title="Pendientes" />
     <item
         android:id="@+id/navigation_approved_requests"
-        android:icon="@drawable/iconl"
+        android:icon="@drawable/iconr"
         android:title="Historial" />
 
     <item
         android:id="@+id/navigation_team"
-        android:icon="@drawable/iconr"
+        android:icon="@drawable/iconl"
         android:title="Equipo" />
+
+    <item
+        android:id="@+id/navigation_logout"
+        android:title="Cerrar sesión"
+        android:icon="@drawable/icon" />
 </menu>

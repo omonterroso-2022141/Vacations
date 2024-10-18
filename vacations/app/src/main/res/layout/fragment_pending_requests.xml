@@ -5,7 +5,9 @@
     <LinearLayout
         android:id="@+id/requestsContainer"
         android:layout_width="match_parent"
+        android:background="@drawable/fondoble"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:orientation="vertical"
         android:padding="16dp" />
 </ScrollView>
