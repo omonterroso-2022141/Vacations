@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_pending_requests"
         android:icon="@drawable/icon"
-        android:title="Profile" />
+        android:title="Pendientes" />
     <item
-        android:id="@+id/navigation_request"
+        android:id="@+id/navigation_approved_requests"
         android:icon="@drawable/iconr"
-    android:title="Request" />
+        android:title="Historial" />
+
     <item
         android:id="@+id/navigation_team"
         android:icon="@drawable/iconl"
-    android:title="Team" />
+        android:title="Equipo" />
+
     <item
         android:id="@+id/navigation_logout"
         android:title="Cerrar sesión"
-        android:icon="@drawable/icon"/>
-
+        android:icon="@drawable/icon" />
 </menu>

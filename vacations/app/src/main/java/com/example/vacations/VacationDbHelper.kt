@@ -13,7 +13,7 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Crear tabla de empleados
+
         val CREATE_EMPLOYEE_TABLE = """
             CREATE TABLE employee (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,7 +25,7 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         """.trimIndent()
         db.execSQL(CREATE_EMPLOYEE_TABLE)
 
-        // Crear tabla de solicitudes de vacaciones
+
         val CREATE_VACATION_TABLE = """
             CREATE TABLE vacation (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,8 +40,8 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         """.trimIndent()
         db.execSQL(CREATE_VACATION_TABLE)
         insertDefaultRequest(db)
-        // Insertar un empleado por defecto
         insertDefaultEmployee(db)
+        insertDefaultBoss(db)
 
     }
 
@@ -59,7 +59,7 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         }
     }
 
-    // Función para insertar un usuario por defecto en la tabla de empleados
+
     private fun insertDefaultEmployee(db: SQLiteDatabase) {
         val values = ContentValues().apply {
             put("username", "defaultuser")    // Usuario por defecto
@@ -74,6 +74,23 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
             println("Error al crear el usuario por defecto")
         }
     }
+
+    private fun insertDefaultBoss(db: SQLiteDatabase) {
+        val values = ContentValues().apply {
+            put("username", "defaultboss")    // Usuario por defecto
+            put("password", "password123")    // Contraseña por defecto
+            put("role", "boss")           // Rol del usuario
+            put("available_days", 20)         // Días de vacaciones por defecto
+        }
+        val newRowId = db.insert("employee", null, values)
+        if (newRowId != -1L) {
+            println("Usuario por defecto creado con ID: $newRowId")
+        } else {
+            println("Error al crear el usuario por defecto")
+        }
+    }
+
+
 
     private fun insertDefaultRequest(db: SQLiteDatabase) {
         val values = ContentValues().apply {
@@ -91,4 +108,47 @@ class VacationDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
             println("Error al crear el usuario por defecto")
         }
     }
+
+    fun getVacationRequests(employeeId: Int): List<VacationRequest> {
+        val requests = mutableListOf<VacationRequest>()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM vacation WHERE employee_id = ?", arrayOf(employeeId.toString()))
+
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+                val startDate = cursor.getString(cursor.getColumnIndexOrThrow("start_date"))
+                val endDate = cursor.getString(cursor.getColumnIndexOrThrow("end_date"))
+                val availableDays = cursor.getInt(cursor.getColumnIndexOrThrow("available_days"))
+                val comment = cursor.getString(cursor.getColumnIndexOrThrow("comment"))
+                val status = cursor.getString(cursor.getColumnIndexOrThrow("status"))
+
+                requests.add(VacationRequest(id, employeeId, startDate, endDate, availableDays, comment, status))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return requests
+    }
+
+
+    data class VacationRequest(
+        val id: Int,
+        val employeeId: Int,
+        val startDate: String,
+        val endDate: String,
+        val availableDays: Int,
+        val comment: String,
+        val status: String
+    )
+
+    data class EmployeeInfo(
+        val name: String,
+        val availableDays: Int
+    )
+    data class Employee(
+        val id: Int,
+        val username: String,
+        val role: String
+    )
+
 }

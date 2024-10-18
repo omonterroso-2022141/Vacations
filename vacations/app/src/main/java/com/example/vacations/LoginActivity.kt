@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.vacations.VacationDbHelper.Employee
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var dbHelper: VacationDbHelper
@@ -27,12 +28,17 @@ class LoginActivity : AppCompatActivity() {
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 val employee = login(username, password)
                 if (employee != null) {
-                    // Almacenar los datos del empleado en un Intent y enviar a MainActivity
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("employeeId", employee.id)
-                    intent.putExtra("username", employee.username)
-                    startActivity(intent)
-                    finish() // Finaliza LoginActivity para que no se pueda regresar con "back"
+                    // Dependiendo del rol, redirigir a la actividad correcta
+                    if (employee.role == "boss") {
+                        val intent = Intent(this, BossMainActivity::class.java)  // Actividad de jefe
+                        intent.putExtra("employeeId", employee.id)
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(this, MainActivity::class.java)  // Actividad de empleado
+                        intent.putExtra("employeeId", employee.id)
+                        startActivity(intent)
+                    }
+                    finish()
                 } else {
                     Toast.makeText(this, "Invalid login credentials", Toast.LENGTH_SHORT).show()
                 }
@@ -42,21 +48,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Función para verificar el login
+    // Método para verificar el login
     private fun login(username: String, password: String): Employee? {
         val db = dbHelper.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM employee WHERE username = ? AND password = ?", arrayOf(username, password))
 
         if (cursor.moveToFirst()) {
             val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
-            val availableDays = cursor.getInt(cursor.getColumnIndexOrThrow("available_days"))
+            val role = cursor.getString(cursor.getColumnIndexOrThrow("role"))
             cursor.close()
-            return Employee(id, username, availableDays)
+            return Employee(id, username, role)
         }
 
         cursor.close()
         return null
     }
 }
-
-data class Employee(val id: Int, val username: String, val availableDays: Int)

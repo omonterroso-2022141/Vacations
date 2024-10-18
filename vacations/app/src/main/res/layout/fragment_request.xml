@@ -1,47 +1,88 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@drawable/fontp"
+    android:padding="20dp">
 
-    <!-- Contador de días de vacaciones disponibles -->
+    <!-- Título en la parte superior -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/agdasima_bold"
+        android:text="Días disponibles"
+        android:textColor="@color/white"
+        android:textSize="50sp" />
+
+    <!-- Botón de cerrar sesión -->
+    <!-- Hacerlo transparente o poner un drawable -->
+
+
+    <!-- Número "0" debajo del título -->
+
     <TextView
         android:id="@+id/textViewAvailableDays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Available days: 0"
-        android:textSize="18sp"
-        android:paddingBottom="16dp"/>
+        android:text="0"
+        android:textSize="80sp"
+        android:fontFamily="@font/agdasima_bold"
+        android:layout_below="@id/titleTextView"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
 
-    <!-- Fecha de inicio de vacaciones -->
-    <Button
-        android:id="@+id/buttonStartDate"
+    <!-- Contenedor para los elementos restantes -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Start Date" />
+        android:orientation="vertical"
+        android:layout_below="@id/textViewAvailableDays"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentBottom="true">
 
-    <!-- Fecha de fin de vacaciones -->
-    <Button
-        android:id="@+id/buttonEndDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select End Date" />
+        <!-- Botón para seleccionar fecha de inicio -->
+        <Button
+            android:id="@+id/buttonStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/agdasima_bold"
+            android:text="Fecha de inicio" />
 
-    <!-- Campo de comentarios -->
-    <EditText
-        android:id="@+id/editTextComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Add details (optional)"
-        android:minHeight="100dp"
-        android:gravity="top"
-        android:padding="8dp"/>
+        <!-- Botón para seleccionar fecha de fin -->
+        <Button
+            android:id="@+id/buttonEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/agdasima_bold"
+            android:text="Fecha de finalizacion" />
 
-    <!-- Botón para solicitar vacaciones -->
-    <Button
-        android:id="@+id/btnRequest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit Vacation Request" />
-</LinearLayout>
+        <!-- Campo de comentarios -->
+        <EditText
+            android:id="@+id/editTextComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/agdasima_bold"
+            android:gravity="top"
+            android:hint="Motivo o comentario adicional"
+            android:minHeight="120dp"
+            android:padding="8dp" />
+
+        <!-- Botón para solicitar vacaciones -->
+        <Button
+            android:id="@+id/btnRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/agdasima_bold"
+            android:text="Enviar solicitud" />
+    </LinearLayout>
+
+</RelativeLayout>
